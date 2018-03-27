@@ -1,0 +1,120 @@
+﻿<Page x:Class="Musix.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Musix"
+      mc:Ignorable="d" 
+      d:DesignHeight="457.5" d:DesignWidth="603"
+      Title="MainPage" Margin="0,0,3,0">
+    <Page.Resources>
+        <DataTemplate x:Key="AlbumListData">
+            <Grid Width="200" >
+                <Image Width="180" Height="180" Source="{Binding image}" Stretch="UniformToFill" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Album}" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="18" Margin="10,190,10,0"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Artist}" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="14" Margin="10,220,10,0" Foreground="#FF515151"/>
+                <Button HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="48" Height="48" BorderBrush="{x:Null}" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="pack://application:,,,/Play_35px.png"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid Loaded="Page_load" Margin="0" Background="White">
+        <Label Content="Musix" HorizontalAlignment="Left" VerticalAlignment="Top" Height="51" Width="153" FontSize="36" Foreground="Black"/>
+        <TabControl Margin="0,76,0,0" VerticalAlignment="Top" BorderBrush="{x:Null}" Background="{x:Null}">
+            <TabItem x:Name="Artist_tab" Header="Artists" FontSize="18" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black" GotFocus="Artist_tab_GotFocus">
+                <Grid Margin="0,0,0,-2">
+                    <ListView x:Name="artist_listView" VerticalAlignment="Top" Margin="0,0,0,89" MouseDoubleClick="artist_listView_DoubleClick" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn />
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Album_Tab" Header="Album" FontSize="18" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black">
+                <Grid Background="White">
+                    <ListView ItemTemplate="{StaticResource AlbumListData}" x:Name="album_list" VerticalAlignment="Top" VerticalContentAlignment="Stretch" MouseDoubleClick="album_list_DoubleClick" Background="White" BorderBrush="{x:Null}" Foreground="Black" Margin="0,0,0,89">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="6" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="10,10,10,10">
+                                </UniformGrid>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Song_Tab" Header="Songs" FontSize="18" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black" Margin="-2,-2,-1,0">
+                <Grid>
+                    <ListView x:Name="song_list" VerticalAlignment="Top" VerticalContentAlignment="Stretch" FontSize="16" MouseDoubleClick="songList_DoubleClick" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Title}" Width="400"/>
+                                <GridViewColumn Header="Artist" DisplayMemberBinding="{Binding Artist}" Width="300"/>
+                                <GridViewColumn Header="Album" DisplayMemberBinding="{Binding Album}" Width="300"/>
+                                <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Duration}" Width="200"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="Genre_Tab" Header="Genre" FontSize="18" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black">
+                <ListView x:Name="genre_list" VerticalAlignment="Top" Margin="0" MouseDoubleClick="genre_listView_DoubleClick" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn />
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Favourites" FontSize="18" BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black"/>
+        </TabControl>
+        <Grid Height="90" VerticalAlignment="Bottom" Background="#FF395CD3">
+            <Button x:Name="playPause_Button" HorizontalAlignment="Right" Margin="0,29,62,0" VerticalAlignment="Top" Width="48" Height="48" Click="playPause_Click">
+                <Button.Background>
+                    <ImageBrush x:Name="playPause_ButtonImage" ImageSource="pack://application:,,,/Play_48.png"/>
+                </Button.Background>
+            </Button>
+            <Label x:Name="nowPlaying_Title" Content="Now Playing" HorizontalAlignment="Left" Margin="120,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="20"/>
+            <Label x:Name="nowPlaying_Artist" Content="Artist" HorizontalAlignment="Left" Margin="120,36,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+            <Button x:Name="stop_Button" HorizontalAlignment="Right" Margin="0,29,10,0" VerticalAlignment="Top" Width="48" Height="48" Click="stop_Click">
+                <Button.Background>
+                    <ImageBrush x:Name="stop_ButtonImage" ImageSource="pack://application:,,,/Stop_48.png"/>
+                </Button.Background>
+            </Button>
+            <Image x:Name="nowPlaying_AlbumArt" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
+            <Label x:Name="timeSpan_Label" Content="00:00" HorizontalAlignment="Right" Margin="0,36,129,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+            <ProgressBar x:Name="timeElapsed_progressBar" HorizontalAlignment="Right" Height="10" Margin="0,47,182,0" VerticalAlignment="Top" Width="300" VerticalContentAlignment="Center" MouseDown="timeElapsed_progressBar_MouseDown" MouseMove="timeElapsed_progressBar_MouseMove"/>
+            <Label x:Name="timeElapsed_Label" Content="00:00" HorizontalAlignment="Right" Margin="0,36,482,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+            <Button x:Name="expand_Button" HorizontalAlignment="Right" Margin="0,29,530,0" VerticalAlignment="Top" Width="48" Height="48" Click="expand_Button_Click" BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush x:Name="playPause_ButtonImage1" ImageSource="Collapse_Arrow_48.png"/>
+                </Button.Background>
+            </Button>
+        </Grid>
+        <Button  HorizontalAlignment="Right" Margin="0,15,282,0" VerticalAlignment="Top" Width="40" Click="changeFolder_Button_click" Height="40" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="Add_Folder_32.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="search_Button"  HorizontalAlignment="Right" Margin="0,15,0,0" VerticalAlignment="Top" Width="40" Height="40" BorderBrush="{x:Null}" Click="search_Button_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="Search_32.png"/>
+            </Button.Background>
+        </Button>
+
+
+        <ComboBox x:Name="searchEntry_TextBox" HorizontalAlignment="Right" Margin="0,15,40,0" VerticalAlignment="Top" Width="221" Height="41" IsEditable="True" FontSize="20" SelectionChanged="searchEntry_TextBox_SelectionChanged"/>
+        <Button  HorizontalAlignment="Right" Margin="0,15,327,0" VerticalAlignment="Top" Width="40" Height="40" BorderBrush="{x:Null}" RenderTransformOrigin="1.325,0.425" Click="refreshButton_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="Refresh_32.png"/>
+            </Button.Background>
+        </Button>
+    </Grid>
+</Page>
